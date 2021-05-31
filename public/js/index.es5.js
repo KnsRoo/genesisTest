@@ -1,5 +1,5 @@
 import Widget from './components/App';
 
 document.addEventListener('DOMContentLoaded', function () {
-	new Widget('#widget');
+	var app = new Widget('#widget');
 });
