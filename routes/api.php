@@ -2,17 +2,39 @@
 
 use Illuminate\Http\Request;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
-
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::group([
+	'middleware' => ['api'],
+	'prefix' => 'leads'
+], function(){
+    Route::resource('leads', 'LeadController');
+
+    // Другие методы
+
+    Route::post('/add', 'LeadController@addLead')->name('api:lead:add');
+});
+
+Route::group([
+	'middleware' => ['api'],
+	'prefix' => 'contacts'
+], function(){
+    Route::resource('contacts', 'ContactsController');
+
+    // Другие методы
+
+    Route::post('/add', 'ContactsController@addContact')->name('api:contact:add');
+});
+
+Route::group([
+	'middleware' => ['api'],
+	'prefix' => 'companies'
+], function(){
+    Route::resource('companies', 'CompanyController');
+
+    // Другие методы
+
+    Route::post('/add', 'CompanyController@addCompany')->name('api:company:add');
 });
