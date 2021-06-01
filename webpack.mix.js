@@ -18,5 +18,4 @@ let mix = require('laravel-mix');
 })
 
 mix.js('resources/assets/js/index.js', 'public/js')
-   .babel(['resources/assets/js/index.js'], 'public/js/index.es5.js')
    .sass('resources/assets/sass/index.scss', 'public/css');

@@ -19,6 +19,7 @@ export default {
 	methods: {
 		getData(){
 			return {
+				id: null,
 				name: this.name,
 			}
 		}

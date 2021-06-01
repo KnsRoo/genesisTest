@@ -3,7 +3,7 @@
 		<div class = "form__title">Добавление сделки</div>
 		<div class = "form__inner">
 			<input class = "text-input" type ="text" v-model = "name" placeholder="Название сделки" />
-			<input class = "text-input" type ="text" v-model = "price" placeholder="Бюджет сделки" />
+			<input class = "text-input" type ="numeric" v-model = "price" placeholder="Бюджет сделки" />
 		</div>
 	</div>
 </template>
@@ -21,8 +21,9 @@ export default {
 	methods: {
 		getData(){
 			return {
+				id: null,
 				name: this.name,
-				price: this.price
+				price: parseInt(this.price)
 			}
 		}
 	}

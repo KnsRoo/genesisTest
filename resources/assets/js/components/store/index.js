@@ -26,15 +26,24 @@ const store = new Vuex.Store({
 		* Эти экшены можно обьединить в один, но так вроде более читаемо
 		*/
 		async addLead({commit}, data){
-			//const response = await axios.post('/api/leads/add', data)
+			const response = await axios.post('/api/leads/add', data)
+			if (response.status == 200){
+				data.id = response.data.id
+			}
 			commit('setLead',data)
 		},
 		async addContact({commit}, data){
-			//const response = await axios.post('/api/contacts/add', data)
+			const response = await axios.post('/api/contacts/add', data)
+			if (response.status == 200){
+				data.id = response.data.id
+			}
 			commit('setContact', data)
 		},
 		async addCompany({commit}, data){
-			//const response = await axios.post('/api/companies/add', data)
+			const response = await axios.post('/api/companies/add', data)
+			if (response.status == 200){
+				data.id = response.data.id
+			}
 			commit('setCompany', data)
 		}
 	},

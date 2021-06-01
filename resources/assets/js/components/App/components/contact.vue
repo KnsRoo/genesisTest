@@ -23,6 +23,7 @@ export default {
 	methods: {
 		getData(){
 			return {
+				id: null,
 				name: this.name,
 				first_name: this.firstName,
 				last_name: this.lastName

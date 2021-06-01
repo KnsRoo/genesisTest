@@ -25,7 +25,7 @@ class LeadRequest extends FormRequest
     {
         return [
             'name' => 'string',
-            'price' => 'numeric'
+            'price' => 'integer'
         ];
     }
 }

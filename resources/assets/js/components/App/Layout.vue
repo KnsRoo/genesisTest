@@ -5,7 +5,7 @@
         <lead ref = "leads" v-if = "active == 'Сделка'"></lead>
         <contact ref = "contacts" v-else-if = "active == 'Контакт'"></contact>
         <company ref = "companies" v-else-if = "active == 'Компания'"></company>
-        <custom-button @onclick = "add" caption = "Сохранить" :disabled = "!active"></custom-button>
+        <custom-button @onclick = "add" :loading = "loading" caption = "Сохранить" :disabled = "!active"></custom-button>
         <custom-table :table = "tableData" :header = "tableHeader" :caption = "tableCaption"></custom-table>
     </div>
 </template>
@@ -22,6 +22,7 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
     data(){
         return {
+            loading: false,
             active: undefined
         }
     },
@@ -45,9 +46,9 @@ export default {
         },
         tableHeader(){
             switch (this.active){
-                case 'Сделка': return ["Название сделки", "Бюджет сделки"]; break;
-                case 'Контакт': return ["Название контакта", "Имя", "Фамилия"]; break;
-                case 'Компания': return ["Название компании"]; break;
+                case 'Сделка': return ["id", "Название сделки", "Бюджет сделки"]; break;
+                case 'Контакт': return ["id", "Название контакта", "Имя", "Фамилия"]; break;
+                case 'Компания': return ["id", "Название компании"]; break;
                 default: return [];
             }       
         },
@@ -65,21 +66,23 @@ export default {
         setActive(key){
             this.active = key
         },
-        add(){
+        async add(){
+            this.loading = true
             switch (this.active){
                 case 'Сделка': {
                     let data = this.$refs.leads.getData()
-                    this.addLead(data)
+                    await this.addLead(data)
                 }; break;
                 case 'Контакт': {
                     let data = this.$refs.contacts.getData()
-                    this.addContact(data)
+                    await this.addContact(data)
                 }; break;
                 case 'Компания': {
                     let data = this.$refs.companies.getData()
-                    this.addCompany(data)
+                    await this.addCompany(data)
                 }; break;
             }
+            this.loading = false
         }
     }
 }

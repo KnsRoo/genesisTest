@@ -2,6 +2,10 @@
 
 use Illuminate\Http\Request;
 
+use Http\Controllers\LeadController;
+use Http\Controllers\ContactsController;
+use Http\Controllers\CompanyController;
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
