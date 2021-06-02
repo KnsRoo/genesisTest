@@ -1,10 +1,10 @@
 <template>
     <div class="wrapper">
         <div class = "title">AmoCRM TEST</div>
-        <custom-select @change = "setActive" :options = "['Сделка', 'Контакт', 'Компания']"></custom-select>
-        <lead ref = "leads" v-if = "active == 'Сделка'"></lead>
-        <contact ref = "contacts" v-else-if = "active == 'Контакт'"></contact>
-        <company ref = "companies" v-else-if = "active == 'Компания'"></company>
+        <custom-select v-model = "active" :options = "options"></custom-select>
+        <lead v-if = "active == 'Сделка'"></lead>
+        <contact v-else-if = "active == 'Контакт'"></contact>
+        <company v-else-if = "active == 'Компания'"></company>
         <custom-button @onclick = "add" :loading = "loading" caption = "Сохранить" :disabled = "!active"></custom-button>
         <custom-table :table = "tableData" :header = "tableHeader" :caption = "tableCaption"></custom-table>
     </div>
@@ -17,15 +17,9 @@ import Lead from './components/lead.vue'
 import Contact from './components/contact.vue'
 import Company from './components/company.vue'
 import Table from './components/table.vue'
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 
 export default {
-    data(){
-        return {
-            loading: false,
-            active: undefined
-        }
-    },
     components: {
         'custom-select': Select,
         'custom-button': Button,
@@ -35,55 +29,19 @@ export default {
         'company': Company
     },
     computed: {
-        ...mapGetters(['leads','contacts','companies']),
-        tableData(){
-            switch (this.active){
-                case 'Сделка': return this.leads; break;
-                case 'Контакт': return this.contacts; break;
-                case 'Компания': return this.companies; break;
-                default: return [];
-            }    
-        },
-        tableHeader(){
-            switch (this.active){
-                case 'Сделка': return ["id", "Название сделки", "Бюджет сделки"]; break;
-                case 'Контакт': return ["id", "Название контакта", "Имя", "Фамилия"]; break;
-                case 'Компания': return ["id", "Название компании"]; break;
-                default: return [];
-            }       
-        },
-        tableCaption(){
-            switch (this.active){
-                case 'Сделка': return "Таблица сделок"; break;
-                case 'Контакт': return "Таблица контактов"; break;
-                case 'Компания': return "Таблица компаний"; break;
-                default: return "";
-            }       
+        ...mapGetters(['activeModel', 'options', 'loading', 'tableData', 'tableHeader', 'tableCaption']),
+        active: {
+            set(model){
+                this.setActiveModel(model)
+            },
+            get(){
+                return this.activeModel
+            }
         }
     },
     methods: {
-        ...mapActions(['addLead', 'addContact', 'addCompany']),
-        setActive(key){
-            this.active = key
-        },
-        async add(){
-            this.loading = true
-            switch (this.active){
-                case 'Сделка': {
-                    let data = this.$refs.leads.getData()
-                    await this.addLead(data)
-                }; break;
-                case 'Контакт': {
-                    let data = this.$refs.contacts.getData()
-                    await this.addContact(data)
-                }; break;
-                case 'Компания': {
-                    let data = this.$refs.companies.getData()
-                    await this.addCompany(data)
-                }; break;
-            }
-            this.loading = false
-        }
+        ...mapMutations(['setActiveModel']),
+        ...mapActions(['add'])
     }
 }
 </script>

@@ -9,23 +9,31 @@
 </template>
 
 <script>
+import { mapMutations, mapGetters } from 'vuex'
 
 export default {
 	name: 'lead-add',
-	data(){
-		return {
-			name: '',
-			price: ''
-		}
+	computed: {
+		...mapGetters(['lead']),
+		name: {
+			set(value){
+				this.setProp({ model: 'lead', prop: 'name', value})
+			},
+			get(){
+				return this.lead.name
+			}
+		},
+		price: {
+			set(value){
+				this.setProp({ model: 'lead', prop: 'price', value: parseInt(value)})
+			},
+			get(){
+				return this.lead.price
+			}
+		},
 	},
 	methods: {
-		getData(){
-			return {
-				id: null,
-				name: this.name,
-				price: parseInt(this.price)
-			}
-		}
+		...mapMutations(['setProp'])
 	}
 }
 </script>

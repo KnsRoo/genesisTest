@@ -8,21 +8,23 @@
 </template>
 
 <script>
+import { mapMutations, mapGetters } from 'vuex'
 
 export default {
 	name: 'company-add',
-	data(){
-		return {
-			name: ''
+	computed: {
+		...mapGetters(['company']),
+		name: {
+			set(value){
+				this.setProp({model: 'company', prop: 'name', value})
+			},
+			get(){
+				return this.company.name
+			}
 		}
 	},
 	methods: {
-		getData(){
-			return {
-				id: null,
-				name: this.name,
-			}
-		}
+		...mapMutations(['setProp'])
 	}
 }
 </script>

@@ -15,11 +15,17 @@
 <script>
 export default {
 	name: "custom-select",
+	prop: ['selected'],
 	data(){
 		return {
-			selected: "Не выбрано",
+			// Эти поля относятся только к этому компоненту и необходимы для его корректной работы
+			selected: 'Не выбрано',
 			opened: false
 		}
+	},
+	model: {
+		prop: 'selected',
+		event: 'change',
 	},
 	props: {
 		options: {
@@ -31,13 +37,9 @@ export default {
 			return ["Не выбрано", ...this.$props.options]
 		}
 	},
-	watch: {
-		selected(){
-			this.$emit('change',this.selected)
-		}
-	},
 	methods: {
 		setSelected(key){
+			this.$emit('change', key)
 			this.selected = key
 			this.opened = false
 		},

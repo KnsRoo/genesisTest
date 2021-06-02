@@ -3,32 +3,46 @@
 		<div class = "form__title">Добавление контакта</div>
 		<div class = "form__inner">
 			<input class = "text-input" type ="text" v-model = "name" placeholder="Название контакта" />
-			<input class = "text-input" type ="text" v-model = "firstName" placeholder="Имя" />
-			<input class = "text-input" type ="text" v-model = "lastName" placeholder="Фамилия" />
+			<input class = "text-input" type ="text" v-model = "first_name" placeholder="Имя" />
+			<input class = "text-input" type ="text" v-model = "last_name" placeholder="Фамилия" />
 		</div>
 	</div>
 </template>
 
 <script>
+import { mapMutations, mapGetters } from 'vuex'
 
 export default {
 	name: 'contact-add',
-	data(){
-		return {
-			name: '',
-			firstName: '',
-			lastName: ''
+	computed: {
+		...mapGetters(['contact']),
+		name: {
+			set(value){
+				this.setProp({ model: 'contact', prop: 'name', value})
+			},
+			get(){
+				return this.contact.name
+			}
+		},
+		first_name: {
+			set(value){
+				this.setProp({ model: 'contact', prop: 'first_name', value})
+			},
+			get(){
+				return this.contact.first_name
+			}
+		},
+		last_name: {
+			set(value){
+				this.setProp({ model: 'contact', prop: 'last_name', value})
+			},
+			get(){
+				return this.contact.last_name
+			}
 		}
 	},
 	methods: {
-		getData(){
-			return {
-				id: null,
-				name: this.name,
-				first_name: this.firstName,
-				last_name: this.lastName
-			}
-		}
+		...mapMutations(['setProp'])
 	}
 }
 </script>
