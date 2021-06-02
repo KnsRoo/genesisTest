@@ -5,7 +5,7 @@
         <lead v-if = "active == 'Сделка'"></lead>
         <contact v-else-if = "active == 'Контакт'"></contact>
         <company v-else-if = "active == 'Компания'"></company>
-        <custom-button @onclick = "add" :loading = "loading" caption = "Сохранить" :disabled = "!active"></custom-button>
+        <custom-button @onclick = "add" :loading = "loading" caption = "Создать" :disabled = "!active"></custom-button>
         <custom-table :table = "tableData" :header = "tableHeader" :caption = "tableCaption"></custom-table>
     </div>
 </template>
