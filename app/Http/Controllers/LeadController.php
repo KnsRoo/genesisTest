@@ -30,7 +30,7 @@ class LeadController extends Controller
 
     	$payload = [$req->validated()];
 
-    	$url = $token->base_domain.'/api/v4/leads';
+    	$url = 'https://'.$token->base_domain.'/api/v4/leads';
         $auth = "Authorization: Bearer ".$token->access_token;
 
         $response = Curl::appjson($url)

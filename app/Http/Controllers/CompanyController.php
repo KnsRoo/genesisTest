@@ -30,7 +30,7 @@ class CompanyController extends Controller
 
     	$payload = [$req->validated()];
 
-    	$url = $token->base_domain.'/api/v4/companies';
+    	$url = 'https://'.$token->base_domain.'/api/v4/companies';
         $auth = "Authorization: Bearer ".$token->access_token;
 
         $response = Curl::appjson($url)

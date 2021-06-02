@@ -30,7 +30,7 @@ class ContactsController extends Controller
 
     	$payload = [$req->validated()];
 
-    	$url = $token->base_domain.'/api/v4/contacts';
+    	$url = 'https://'.$token->base_domain.'/api/v4/contacts';
         $auth = "Authorization: Bearer ".$token->access_token;
 
         $response = Curl::appjson($url)
